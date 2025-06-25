@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meet the Crew | Irresponsible Adults</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a1a;
+      --bg2: #1a1a2e;
+      --neon1: #00fff7;
+      --neon2: #ff00ea;
+      --neon3: #fffb00;
+      --text: #f1f1f1;
+      --text2: #b6b6c2;
+      --card: #18182a;
+      --shadow: 0 8px 32px 0 rgba(0,0,0,0.35);
+      --radius: 18px;
+      --transition: 0.3s cubic-bezier(.77,0,.18,1);
+    }
+    body {
+      margin: 0;
+      background: linear-gradient(120deg, var(--bg), var(--bg2) 100%);
+      color: var(--text);
+      font-family: 'Inter', Arial, sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    header {
+      background: rgba(10,10,26,0.92);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(8px);
+      border-bottom: 2px solid var(--neon2);
+      padding: 0;
+    }
+    .nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 32px;
+    }
+    .logo {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2em;
+      font-weight: 700;
+      color: var(--neon1);
+      letter-spacing: 2px;
+      text-shadow: 0 0 12px var(--neon2), 0 0 24px var(--neon1);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .logo::before {
+      content: '';
+      display: inline-block;
+      width: 32px; height: 32px;
+      background: linear-gradient(135deg, var(--neon1), var(--neon2));
+      border-radius: 50%;
+      box-shadow: 0 0 16px var(--neon2);
+      margin-right: 8px;
+    }
+    nav {
+      display: flex;
+      gap: 28px;
+    }
+    nav a {
+      color: var(--text2);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.08em;
+      padding: 7px 16px;
+      border-radius: 6px;
+      transition: background 0.2s, color 0.2s;
+      position: relative;
+      z-index: 1;
+      letter-spacing: 1px;
+    }
+    nav a:hover {
+      color: var(--neon1);
+      background: #23234a44;
+      box-shadow: 0 0 12px var(--neon2);
+    }
+    .members-hero {
+      min-height: 40vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: linear-gradient(120deg, #0a0a1a 60%, #1a1a2e 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .members-hero h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3em;
+      font-weight: 700;
+      color: var(--neon1);
+      margin-bottom: 12px;
+      letter-spacing: 3px;
+      text-shadow: 0 0 24px var(--neon2), 0 0 48px var(--neon1);
+      animation: neonPulse 2s infinite alternate;
+    }
+    @keyframes neonPulse {
+      from { text-shadow: 0 0 24px var(--neon2), 0 0 48px var(--neon1); }
+      to { text-shadow: 0 0 48px var(--neon1), 0 0 64px var(--neon2); }
+    }
+    .members-hero p {
+      font-size: 1.3em;
+      color: var(--text2);
+      margin-bottom: 0;
+      max-width: 600px;
+      text-shadow: 0 0 8px #000a;
+    }
+    .members-section {
+      max-width: 1100px;
+      margin: 40px auto 60px auto;
+      background: rgba(24,24,42,0.92);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+      padding: 48px 36px;
+      border: 2px solid var(--neon2);
+      position: relative;
+    }
+    .members-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 32px;
+      justify-content: center;
+      margin-top: 18px;
+    }
+    .member-card {
+      background: var(--card);
+      border-radius: 16px;
+      box-shadow: 0 0 16px var(--neon2);
+      padding: 24px 18px;
+      width: 240px;
+      text-align: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
+      overflow: hidden;
+      border: 2px solid var(--neon1);
+      animation: fadeInUp 1s;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .member-card:hover {
+      transform: translateY(-8px) scale(1.04);
+      box-shadow: 0 0 32px var(--neon1), 0 0 24px var(--neon2);
+      border-color: var(--neon2);
+    }
+    .member-avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 3px solid var(--neon2);
+      margin-bottom: 14px;
+      object-fit: cover;
+      box-shadow: 0 0 16px var(--neon1);
+      background: #222;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .member-name {
+      font-family: 'Orbitron', sans-serif;
+      color: var(--neon1);
+      font-size: 1.3rem;
+      margin-bottom: 6px;
+      letter-spacing: 1px;
+    }
+    .member-role {
+      color: var(--neon2);
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+    }
+    .member-bio {
+      font-size: 1.01rem;
+      color: var(--text2);
+    }
+    @media (max-width: 900px) {
+      .nav { flex-direction: column; gap: 18px; padding: 16px; }
+      .members-section { padding: 22px 10px; }
+      .members-list { flex-direction: column; gap: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <div class="logo">Irresponsible Adults</div>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="#" style="color:var(--neon1);text-shadow:0 0 8px var(--neon2);">Members</a>
+        <a href="index.html#events">Events</a>
+        <a href="index.html#gallery">Gallery</a>
+        <a href="index.html#join">Join</a>
+      </nav>
+    </div>
+  </header>
+  <section class="members-hero">
+    <h1>Meet the Crew</h1>
+    <p>Every legend needs a crew. Here are the wildest in Los Santos.</p>
+  </section>
+  <div class="members-section">
+    <div class="members-list">
+      <div class="member-card">
+        <img class="member-avatar" src="https://placehold.co/100x100/00fff7/fff?text=NR" alt="NightRunner">
+        <div class="member-name">NightRunner</div>
+        <div class="member-role">Leader</div>
+        <div class="member-bio">Plans the chaos. Always first in, last out.</div>
+      </div>
+      <div class="member-card">
+        <img class="member-avatar" src="https://placehold.co/100x100/ff00ea/fff?text=TV" alt="TurboVixen">
+        <div class="member-name">TurboVixen</div>
+        <div class="member-role">Driver</div>
+        <div class="member-bio">Queen of the getaway. Drifts like a legend.</div>
+      </div>
+      <div class="member-card">
+        <img class="member-avatar" src="https://placehold.co/100x100/fffb00/222?text=BL" alt="Blitz">
+        <div class="member-name">Blitz</div>
+        <div class="member-role">Enforcer</div>
+        <div class="member-bio">Brings the firepower. Never backs down.</div>
+      </div>
+      <div class="member-card">
+        <img class="member-avatar" src="https://placehold.co/100x100/1a1a2e/fff?text=HK" alt="Glitch">
+        <div class="member-name">Glitch</div>
+        <div class="member-role">Hacker</div>
+        <div class="member-bio">Digital ghost. Makes the impossible possible.</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

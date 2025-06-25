@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Irresponsible Adults Crew</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a1a;
+      --bg2: #1a1a2e;
+      --neon1: #00fff7;
+      --neon2: #ff00ea;
+      --neon3: #fffb00;
+      --text: #f1f1f1;
+      --text2: #b6b6c2;
+      --card: #18182a;
+      --shadow: 0 8px 32px 0 rgba(0,0,0,0.35);
+      --radius: 18px;
+      --transition: 0.3s cubic-bezier(.77,0,.18,1);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: linear-gradient(120deg, var(--bg), var(--bg2) 100%);
+      color: var(--text);
+      font-family: 'Inter', Arial, sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10,10,26,0.92);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(8px);
+      border-bottom: 2px solid var(--neon2);
+      animation: fadeInDown 1s;
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 32px;
+    }
+    .logo {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2em;
+      font-weight: 700;
+      color: var(--neon1);
+      letter-spacing: 2px;
+      text-shadow: 0 0 12px var(--neon2), 0 0 24px var(--neon1);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .logo::before {
+      content: '';
+      display: inline-block;
+      width: 32px; height: 32px;
+      background: linear-gradient(135deg, var(--neon1), var(--neon2));
+      border-radius: 50%;
+      box-shadow: 0 0 16px var(--neon2);
+      margin-right: 8px;
+    }
+    nav {
+      display: flex;
+      gap: 28px;
+    }
+    nav a {
+      color: var(--text2);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.08em;
+      padding: 7px 16px;
+      border-radius: 6px;
+      transition: background 0.2s, color 0.2s;
+      position: relative;
+      z-index: 1;
+      letter-spacing: 1px;
+    }
+    nav a::after {
+      content: '';
+      display: block;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--neon1), var(--neon2));
+      transition: width 0.3s;
+      margin: 0 auto;
+    }
+    nav a:hover {
+      color: var(--neon1);
+      background: #23234a44;
+      box-shadow: 0 0 12px var(--neon2);
+    }
+    nav a:hover::after {
+      width: 100%;
+    }
+    /* HERO */
+    .hero {
+      min-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: linear-gradient(120deg, #0a0a1a 60%, #1a1a2e 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg-img {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .hero-bg-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      opacity: 0.28;
+      filter: blur(1.5px) grayscale(0.1);
+      display: block;
+    }
+    .hero-bg-anim {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      z-index: 1;
+      pointer-events: none;
+      background: radial-gradient(circle at 60% 40%, #00fff733 0%, #0a0a1a 80%);
+      opacity: 0.7;
+      animation: moveBg 10s linear infinite alternate;
+      filter: blur(2px);
+    }
+    @keyframes moveBg {
+      0% { background-position: 60% 40%; }
+      100% { background-position: 40% 60%; }
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      margin-top: 60px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3.5em;
+      font-weight: 700;
+      color: var(--neon1);
+      margin-bottom: 18px;
+      letter-spacing: 3px;
+      text-shadow: 0 0 24px var(--neon2), 0 0 48px var(--neon1);
+      animation: neonPulse 2s infinite alternate;
+      position: relative;
+      z-index: 2;
+    }
+    @keyframes neonPulse {
+      from { text-shadow: 0 0 24px var(--neon2), 0 0 48px var(--neon1); }
+      to { text-shadow: 0 0 48px var(--neon1), 0 0 64px var(--neon2); }
+    }
+    .hero p {
+      font-size: 1.5em;
+      color: var(--text2);
+      margin-bottom: 36px;
+      max-width: 600px;
+      text-shadow: 0 0 8px #000a;
+      position: relative;
+      z-index: 2;
+    }
+    .cta-btn {
+      background: linear-gradient(90deg, var(--neon1), var(--neon2));
+      color: #fff;
+      padding: 18px 48px;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.2em;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 0 24px var(--neon2), 0 0 32px var(--neon1);
+      transition: background 0.2s, transform 0.2s, box-shadow 0.3s;
+      text-shadow: 0 0 8px var(--neon2);
+      animation: pulse 2.5s infinite alternate;
+      letter-spacing: 1px;
+      position: relative;
+      z-index: 2;
+    }
+    @keyframes pulse {
+      from { box-shadow: 0 0 24px var(--neon2); }
+      to { box-shadow: 0 0 48px var(--neon1); }
+    }
+    .cta-btn:hover {
+      background: linear-gradient(90deg, var(--neon2), var(--neon1));
+      transform: translateY(-2px) scale(1.07);
+      box-shadow: 0 0 48px var(--neon2);
+    }
+    /* SECTION STYLES */
+    .section {
+      max-width: 1100px;
+      margin: 0 auto 60px auto;
+      background: rgba(24,24,42,0.92);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+      padding: 48px 36px;
+      border: 2px solid var(--neon2);
+      position: relative;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s var(--transition), transform 0.8s var(--transition), background 0.5s;
+    }
+    .section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .section h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2em;
+      color: var(--neon1);
+      margin-bottom: 18px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-shadow: 0 0 10px var(--neon2);
+    }
+    .section p {
+      font-size: 1.15em;
+      color: var(--text2);
+      margin-bottom: 18px;
+    }
+    /* MEMBERS */
+    .members-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 32px;
+      justify-content: center;
+      margin-top: 18px;
+    }
+    .member-card {
+      background: var(--card);
+      border-radius: 16px;
+      box-shadow: 0 0 16px var(--neon2);
+      padding: 24px 18px;
+      width: 220px;
+      text-align: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
+      overflow: hidden;
+      border: 2px solid var(--neon1);
+      animation: fadeInUp 1s;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .member-card:hover {
+      transform: translateY(-8px) scale(1.04);
+      box-shadow: 0 0 32px var(--neon1), 0 0 24px var(--neon2);
+      border-color: var(--neon2);
+    }
+    .member-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 3px solid var(--neon2);
+      margin-bottom: 14px;
+      object-fit: cover;
+      box-shadow: 0 0 16px var(--neon1);
+      background: #222;
+    }
+    .member-name {
+      font-family: 'Orbitron', sans-serif;
+      color: var(--neon1);
+      font-size: 1.2rem;
+      margin-bottom: 6px;
+      letter-spacing: 1px;
+    }
+    .member-role {
+      color: var(--neon2);
+      font-size: 1rem;
+      margin-bottom: 8px;
+    }
+    .member-bio {
+      font-size: 0.98rem;
+      color: var(--text2);
+    }
+    /* EVENTS */
+    .events-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .events-list li {
+      background: #23234a;
+      color: var(--neon1);
+      border-radius: 9px;
+      margin-bottom: 14px;
+      padding: 15px 22px;
+      font-size: 1.08em;
+      box-shadow: 0 2px 12px var(--neon2);
+      border-left: 5px solid var(--neon2);
+      transition: box-shadow 0.2s, background 0.5s, color 0.5s;
+      font-family: 'Inter', Arial, sans-serif;
+    }
+    .events-list li:hover {
+      box-shadow: 0 4px 24px var(--neon1);
+      background: var(--neon2);
+      color: #fff;
+    }
+    /* GALLERY */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 22px;
+      margin-top: 18px;
+    }
+    .gallery-item {
+      background: #181828;
+      border-radius: 14px;
+      box-shadow: 0 2px 18px var(--neon2);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 160px;
+      font-size: 1.13em;
+      color: var(--neon1);
+      font-weight: 700;
+      transition: box-shadow 0.2s, transform 0.2s, background 0.5s, color 0.5s;
+      border: 2px solid var(--neon2);
+      position: relative;
+      z-index: 1;
+      text-shadow: 0 0 8px var(--neon2);
+    }
+    .gallery-item:hover {
+      box-shadow: 0 6px 32px var(--neon1);
+      transform: translateY(-2px) scale(1.04);
+      background: var(--neon2);
+      color: #fff;
+    }
+    /* JOIN FORM */
+    .join-form {
+      background: rgba(24,24,42,0.92);
+      border-radius: 18px;
+      padding: 32px;
+      box-shadow: 0 0 24px var(--neon2);
+      border-left: 4px solid var(--neon1);
+      border-right: 4px solid var(--neon2);
+      max-width: 500px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .join-form input, .join-form textarea {
+      background: #23234a;
+      border: 2px solid var(--neon2);
+      border-radius: 8px;
+      color: var(--text);
+      padding: 12px;
+      font-size: 1rem;
+      outline: none;
+      transition: border 0.2s;
+    }
+    .join-form input:focus, .join-form textarea:focus {
+      border: 2px solid var(--neon1);
+    }
+    .join-form button {
+      background: linear-gradient(90deg, var(--neon1), var(--neon2));
+      color: #fff;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 8px;
+      padding: 14px 0;
+      cursor: pointer;
+      box-shadow: 0 0 16px var(--neon2);
+      transition: background 0.2s, box-shadow 0.2s;
+      margin-top: 8px;
+      letter-spacing: 1px;
+      text-shadow: 0 0 8px var(--neon1);
+    }
+    .join-form button:hover {
+      background: linear-gradient(90deg, var(--neon2), var(--neon1));
+      box-shadow: 0 0 32px var(--neon1);
+    }
+    /* FOOTER */
+    footer {
+      background: rgba(10,10,26,0.92);
+      border-top: 2px solid var(--neon2);
+      text-align: center;
+      padding: 32px 0 18px 0;
+      margin-top: 60px;
+      color: var(--text2);
+      font-size: 1em;
+      box-shadow: 0 -2px 24px #000a;
+      position: relative;
+      z-index: 1;
+    }
+    footer a {
+      color: var(--neon1);
+      text-decoration: none;
+      margin: 0 12px;
+      font-weight: 700;
+      transition: color 0.2s;
+    }
+    footer a:hover {
+      color: var(--neon2);
+    }
+    @media (max-width: 900px) {
+      .nav { flex-direction: column; gap: 18px; padding: 16px; }
+      .section { padding: 22px 10px; }
+      .gallery { grid-template-columns: 1fr; }
+      .members-list { flex-direction: column; gap: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <div class="logo">Irresponsible Adults</div>
+      <nav>
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="members.html">Members</a>
+        <a href="#events">Events</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#join">Join</a>
+      </nav>
+    </div>
+  </header>
+  <section class="hero" id="home">
+    <div class="hero-bg-img">
+      <img src="WhatsApp Image 2025-06-09 at 23.10.55_d9cc1730.jpg" alt="Crew Background" />
+    </div>
+    <div class="hero-bg-anim"></div>
+    <div class="hero-content">
+      <h1>Irresponsible Adults</h1>
+      <p>
+        <span style="color:var(--neon2);font-weight:700;">Los Santos’ wildest crew.</span><br>
+        Where chaos, fun, and neon nights never end.
+      </p>
+      <button class="cta-btn" onclick="document.getElementById('join').scrollIntoView({behavior:'smooth'})">Join the Madness</button>
+    </div>
+  </section>
+  <div class="section" id="about">
+    <h2>About Us</h2>
+    <p>
+      We’re a crew of thrill-seekers, stunt drivers, and heist masters. If you love wild rides, epic fails, and unforgettable moments in GTA V, you’ll fit right in. No drama, just pure fun and neon-fueled action.
+    </p>
+  </div>
+  <div class="section" id="members">
+    <h2>Meet the Crew</h2>
+    <div class="members-list">
+      <div class="member-card">
+        <img class="member-avatar" src="https://placehold.co/80x80/00fff7/fff?text=NR" alt="Leader">
+        <div class="member-name">NightRunner</div>
+        <div class="member-role">Leader</div>
+        <div class="member-bio">Plans the chaos. Always first in, last out.</div>
+      </div>
+      <div class="member-card">
+        <img class="member-avatar" src="https://placehold.co/80x80/ff00ea/fff?text=TV" alt="Driver">
+        <div class="member-name">TurboVixen</div>
+        <div class="member-role">Driver</div>
+        <div class="member-bio">Queen of the getaway. Drifts like a legend.</div>
+      </div>
+      <div class="member-card">
+        <img class="member-avatar" src="https://placehold.co/80x80/fffb00/222?text=BL" alt="Enforcer">
+        <div class="member-name">Blitz</div>
+        <div class="member-role">Enforcer</div>
+        <div class="member-bio">Brings the firepower. Never backs down.</div>
+      </div>
+      <div class="member-card">
+        <img class="member-avatar" src="https://placehold.co/80x80/1a1a2e/fff?text=HK" alt="Hacker">
+        <div class="member-name">Glitch</div>
+        <div class="member-role">Hacker</div>
+        <div class="member-bio">Digital ghost. Makes the impossible possible.</div>
+      </div>
+    </div>
+  </div>
+  <div class="section" id="events">
+    <h2>Upcoming Events</h2>
+    <ul class="events-list">
+      <li><strong>Neon Heist:</strong> July 12, 2025 – 10:00 PM</li>
+      <li><strong>Stunt Race Showdown:</strong> July 18, 2025 – 8:30 PM</li>
+      <li><strong>Photo Cruise:</strong> July 25, 2025 – 9:00 PM</li>
+      <li><strong>Car Meet & Drift Night:</strong> August 2, 2025 – 8:00 PM</li>
+    </ul>
+  </div>
+  <div class="section" id="gallery">
+    <h2>Gallery</h2>
+    <div class="gallery">
+      <div class="gallery-item">Heist Highlights<br><img src="https://placehold.co/320x160/00fff7/222?text=Heist" alt="Heist" style="width:100%;border-radius:10px;margin-top:10px;"></div>
+      <div class="gallery-item">Car Meet<br><img src="https://placehold.co/320x160/ff00ea/222?text=Car+Meet" alt="Car Meet" style="width:100%;border-radius:10px;margin-top:10px;"></div>
+      <div class="gallery-item">Stunt Races<br><img src="https://placehold.co/320x160/fffb00/222?text=Stunt" alt="Stunt" style="width:100%;border-radius:10px;margin-top:10px;"></div>
+      <div class="gallery-item">Crew Fun<br><img src="https://placehold.co/320x160/1a1a2e/fff?text=Fun" alt="Fun" style="width:100%;border-radius:10px;margin-top:10px;"></div>
+    </div>
+  </div>
+  <div class="section" id="join">
+    <h2>Join the Crew</h2>
+    <form class="join-form" id="join-form" autocomplete="off">
+      <input type="text" name="name" placeholder="Your GTA Name" required>
+      <input type="text" name="role" placeholder="Preferred Role (Driver, Heister, etc.)" required>
+      <textarea name="why" rows="3" placeholder="Why do you want to join?" required></textarea>
+      <button type="submit">Apply Now</button>
+    </form>
+    <div id="thanks-message" style="display:none;text-align:center;margin-top:24px;font-size:1.2rem;color:var(--neon2);">
+      Thanks for applying! We'll get back to you soon.
+    </div>
+  </div>
+  <footer>
+    <p>&copy; 2025 Irresponsible Adults Crew</p>
+    <div>
+      <a href="#">Rockstar Social Club</a>
+      <a href="#">Discord</a>
+      <a href="#">YouTube</a>
+    </div>
+  </footer>
+  <script>
+    // Smooth scroll for nav links
+    document.querySelectorAll('nav a').forEach(link => {
+      link.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (href.startsWith('#')) {
+          e.preventDefault();
+          document.querySelector(href).scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+    // Section reveal on scroll
+    function revealSections() {
+      document.querySelectorAll('.section').forEach(section => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 80) {
+          section.classList.add('visible');
+        }
+      });
+    }
+    window.addEventListener('scroll', revealSections);
+    window.addEventListener('load', revealSections);
+    // Join form thanks message
+    document.getElementById('join-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      this.style.display = 'none';
+      document.getElementById('thanks-message').style.display = 'block';
+    });
+  </script>
+</body>
+</html>
