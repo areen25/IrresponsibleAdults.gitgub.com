@@ -45,26 +45,41 @@
       padding: 18px 32px;
       position: relative;
     }
-    .logo {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 2em;
-      font-weight: 700;
-      color: var(--neon1);
-      letter-spacing: 2px;
-      text-shadow: 0 0 12px var(--neon2), 0 0 24px var(--neon1);
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .logo::before {
-      content: '';
-      display: inline-block;
-      width: 32px; height: 32px;
-      background: linear-gradient(135deg, var(--neon1), var(--neon2));
-      border-radius: 50%;
-      box-shadow: 0 0 16px var(--neon2);
-      margin-right: 8px;
-    }
+  .logo {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(1rem, 4vw, 1.6rem); /* Smaller font for small screens */
+  font-weight: 700;
+  color: var(--neon1);
+  letter-spacing: 1px;
+  text-shadow: 0 0 12px var(--neon2), 0 0 24px var(--neon1);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.logo::before {
+  content: '';
+  display: inline-block;
+  width: clamp(18px, 5vw, 28px);
+  height: clamp(18px, 5vw, 28px);
+  background: linear-gradient(135deg, var(--neon1), var(--neon2));
+  border-radius: 50%;
+  box-shadow: 0 0 12px var(--neon2);
+}
+
+@media (max-width: 350px) {
+  .logo {
+    font-size: 1rem;
+    gap: 4px;
+  }
+
+  .logo::before {
+    width: 20px;
+    height: 20px;
+    margin-right: 4px;
+  }
+}
+
 
     .hamburger {
       display: none;
@@ -219,7 +234,7 @@
       background: rgba(24,24,42,0.92);
       box-shadow: var(--shadow);
       border-radius: var(--radius);
-      padding: 48px 36px;
+     padding: 16px 12px; /* Reduced from 48px 36px */
       border: 2px solid var(--neon2);
       position: relative;
     }
@@ -227,9 +242,10 @@
     .members-list {
       display: flex;
       flex-wrap: wrap;
-      gap: 32px;
+  gap: 12px; /* Reduced from 32px */
       justify-content: center;
       margin-top: 18px;
+       margin: 0;
     }
     .member-card {
       background: var(--card);
