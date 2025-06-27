@@ -136,6 +136,7 @@
       opacity: 1;
       pointer-events: auto;
     }
+    
 
     @media (max-width: 900px) {
       .hamburger {
@@ -222,6 +223,7 @@
       border: 2px solid var(--neon2);
       position: relative;
     }
+    
     .members-list {
       display: flex;
       flex-wrap: wrap;
@@ -242,11 +244,36 @@
       overflow: hidden;
       border: 2px solid var(--neon1);
   animation: slideUpThenBounceOnce 1.2s forwards;
-
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
+      width: 100%;
+  max-width: 390px;
+  height: auto;
+  aspect-ratio: 3 / 4; 
     }
+    
+
+/* Optional: Slightly tweak on medium-sized screens */
+@media (min-width: 600px) {
+  .members-section {
+    padding: 32px 1px;
+  }
+}
+
+/* Optional: Layout changes for larger devices */
+@media (min-width: 900px) {
+  .members-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 32px;
+  }
+  .member-card {
+    max-width: 240px;
+    height: 320px;
+  }
+}
 @keyframes slideUpThenBounceOnce {
   0% {
     opacity: 0;
@@ -321,11 +348,7 @@
       letter-spacing: 1px;
       filter: brightness(1.2) drop-shadow(0 0 6px var(--neon2));
     }
-    @media (max-width: 900px) {
-      .members-section { padding: 22px 10px; }
-      .members-list { flex-direction: column; gap: 18px; }
-      .member-card { width: 98vw; max-width: 340px; height: 340px; }
-    }
+  
 
     footer {
       background: rgba(10,10,26,0.95);
@@ -366,7 +389,9 @@
       <nav>
         <a href="index.html">Home</a>
         <a href="#" style="color:var(--neon1);text-shadow:0 0 8px var(--neon2);">Members</a>
-        
+        <a href="index.html#events">Events</a>
+        <a href="index.html#gallery">Gallery</a>
+        <a href="index.html#join">Join</a>
       </nav>
     </div>
   </header>
