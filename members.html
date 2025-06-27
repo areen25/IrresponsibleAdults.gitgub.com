@@ -1,200 +1,313 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Meet the Crew | Irresponsible Adults</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Inter:wght@400;700&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Irresponsible Adults Crew</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- EmailJS SDK -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <style>
     :root {
-      --bg: #0a0a1a;
-      --bg2: #1a1a2e;
-      --neon1: #00fff7;
-      --neon2: #ff00ea;
-      --neon3: #fffb00;
-      --text: #f1f1f1;
-      --text2: #b6b6c2;
-      --card: #18182a;
-      --shadow: 0 8px 32px 0 rgba(0,0,0,0.35);
-      --radius: 18px;
-      --transition: 0.3s cubic-bezier(.77,0,.18,1);
+    --bg: #0a0a1a;
+    --bg2: #1a1a2e;
+    --neon1: #00fff7;
+    --neon2: #ff00ea;
+    --neon3: #fffb00;
+    --text: #f1f1f1;
+    --text2: #b6b6c2;
+    --card: #18182a;
+    --shadow: 0 8px 32px 0 rgba(0,0,0,0.35);
+    --radius: 18px;
+    --transition: 0.3s cubic-bezier(.77,0,.18,1);
     }
+
+
+
+    *{ box-sizing: border-box; }
     body {
-      margin: 0;
-      background: linear-gradient(120deg, var(--bg), var(--bg2) 100%);
-      color: var(--text);
-      font-family: 'Inter', Arial, sans-serif;
-      min-height: 100vh;
-      overflow-x: hidden;
+    margin: 0;
+    background: linear-gradient(120deg, var(--bg), var(--bg2) 100%);
+    color: var(--text);
+    font-family: 'Inter', Arial, sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
     }
-    header {
-      background: rgba(10,10,26,0.92);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(8px);
-      border-bottom: 2px solid var(--neon2);
-      padding: 0;
-      position: relative;
-      z-index: 300; /* above overlay */
+    body.menu-open {
+    overflow: hidden;
     }
-    .nav {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 18px 32px;
-      position: relative;
-    }
-  .logo {
-  font-family: 'Orbitron', sans-serif;
-  font-size: clamp(1rem, 4vw, 1.6rem); /* Smaller font for small screens */
-  font-weight: 700;
-  color: var(--neon1);
-  letter-spacing: 1px;
-  text-shadow: 0 0 12px var(--neon2), 0 0 24px var(--neon1);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.logo::before {
-  content: '';
-  display: inline-block;
-  width: clamp(18px, 5vw, 28px);
-  height: clamp(18px, 5vw, 28px);
-  background: linear-gradient(135deg, var(--neon1), var(--neon2));
-  border-radius: 50%;
-  box-shadow: 0 0 12px var(--neon2);
-}
-
-@media (max-width: 350px) {
-  .logo {
-    font-size: 1rem;
-    gap: 4px;
-  }
-
-  .logo::before {
-    width: 20px;
-    height: 20px;
-    margin-right: 4px;
-  }
-}
-
-
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      width: 38px;
-      height: 38px;
-      cursor: pointer;
-      z-index: 301; /* above header */
-      transition: transform 0.3s ease;
-    }
-    .hamburger span {
-      display: block;
-      width: 28px;
-      height: 3px;
-      margin: 4px 0;
-      background: var(--neon2);
-      border-radius: 2px;
-      transition: 0.3s;
-    }
-    .hamburger.open span:nth-child(1) {
-      transform: rotate(45deg) translate(7px, 7px);
-    }
-    .hamburger.open span:nth-child(2) {
-      opacity: 0;
-    }
-    .hamburger.open span:nth-child(3) {
-      transform: rotate(-45deg) translate(7px, -9px);
-    }
-
-    nav {
-      display: flex;
-      gap: 28px;
-    }
-    nav a {
-      color: var(--text2);
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 1.08em;
-      padding: 7px 16px;
-      border-radius: 6px;
-      transition: background 0.2s, color 0.2s;
-      position: relative;
-      z-index: 1;
-      letter-spacing: 1px;
-    }
-    nav a:hover {
-      color: var(--neon1);
-      background: #23234a44;
-      box-shadow: 0 0 12px var(--neon2);
-    }
-
-    /* Overlay for menu on mobile */
-    .menu-overlay {
-      display: none;
+  
+    /* Floating particles */
+    .particles {
       position: fixed;
       top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      background: rgba(0, 255, 247, 0.03);
-      backdrop-filter: blur(1px);
-      z-index: 150;
-      opacity: 0;
-      transition: opacity 0.3s;
+      width: 100%; height: 100%;
       pointer-events: none;
+      z-index: 1;
+    }
+  
+    .particle {
+      position: absolute;
+      width: 4px; height: 4px;
+      background: var(--neon1);
+      border-radius: 50%;
+      animation: float 6s infinite linear;
+      box-shadow: 0 0 10px var(--neon1);
+    }
+  
+    @keyframes float {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+    }
+  
+    header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,10,26,0.95);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(12px);
+    border-bottom: 2px solid var(--neon2);
+    animation: fadeInDown 1s;
+    }
+    @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-40px); }
+    to { opacity: 1; transform: translateY(0); }
+    }
+    .nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 32px;
+    }
+    .logo {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2em;
+    font-weight: 700;
+    color: var(--neon1);
+    letter-spacing: 2px;
+    text-shadow: 0 0 12px var(--neon2), 0 0 24px var(--neon1);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    
+    }
+    .logo::before {
+    content: '';
+    display: inline-block;
+    width: 32px; height: 32px;
+    background: linear-gradient(135deg, var(--neon1), var(--neon2));
+    border-radius: 50%;
+    box-shadow: 0 0 16px var(--neon2);
+    margin-right: 8px;
+    animation: spin 10s linear infinite;
+    }
+  
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+  
+    nav {
+    display: flex;
+    gap: 28px;
+    transition: right 0.4s var(--transition);
+    }
+    nav a {
+    color: var(--text2);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.08em;
+    padding: 7px 16px;
+    border-radius: 6px;
+    transition: all 0.3s;
+    position: relative;
+    z-index: 1;
+    letter-spacing: 1px;
+    }
+    nav a::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--neon1), var(--neon2));
+    transition: width 0.3s;
+    margin: 0 auto;
+    }
+    nav a:hover {
+    color: var(--neon1);
+    background: #23234a44;
+    box-shadow: 0 0 12px var(--neon2);
+    transform: translateY(-2px);
+    }
+    nav a:hover::after {
+    width: 100%;
+    }
+  
+    /* Hamburger for mobile */
+    .hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 38px;
+    height: 38px;
+    cursor: pointer;
+    z-index: 201;
+    }
+    .hamburger span {
+    display: block;
+    width: 28px;
+    height: 4px;
+    margin: 4px 0;
+    background: var(--neon2);
+    border-radius: 2px;
+    transition: 0.3s;
+    }
+  
+    /* Overlay for mobile menu */
+    .menu-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(0,255,247,0.03);
+    backdrop-filter: blur(1px);
+    z-index: 150;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
     }
     .menu-overlay.active {
-      display: block;
-      opacity: 1;
-      pointer-events: auto;
+    display: block;
+    opacity: 1;
+    pointer-events: auto;
     }
-    
-
+  
     @media (max-width: 900px) {
-      .hamburger {
-        display: flex;
-      }
-      
-      nav {
-        flex-direction: column;
-        position: fixed;
-        top: 0;
-        right: -100vw;
-        width: 70vw;
-        height: 100vh;
-        background: linear-gradient(120deg, rgba(0,255,247,0.18) 0%, rgba(255,0,234,0.12) 100%), rgba(24,24,42,0.80);
-        border-left: 4px solid var(--neon2);
-        box-shadow: 0 0 32px 8px var(--neon1), -2px 0 24px var(--neon2);
-        align-items: flex-start;
-        gap: 0;
-        padding: 80px 24px 24px 24px;
-        transition: right 0.4s var(--transition);
-        z-index: 200;
-        display: none;
-      }
-      nav.open {
-        right: 0;
-        display: flex;
-        background: linear-gradient(120deg, rgba(0,255,247,0.22) 0%, rgba(255,0,234,0.18) 100%), rgba(24,24,42,0.75);
-        box-shadow: 0 0 64px 16px var(--neon1), -2px 0 48px var(--neon2);
-      }
-      nav:not(.open) {
-        display: none;
-      }
-      nav a {
-        width: 100%;
-        padding: 18px 0;
-        font-size: 1.2em;
-        border-radius: 0;
-        border-bottom: 1px solid #23234a;
-        margin: 0;
-        text-shadow: 0 0 8px var(--neon2);
-      }
+    .nav { flex-direction: row; gap: 0; padding: 10px 8px; }
+    nav {
+    position: fixed;
+    top: 0; right: -100vw;
+    width: 70vw;
+    height: 100vh;
+    background: linear-gradient(120deg, rgba(0,255,247,0.18) 0%, rgba(255,0,234,0.12) 100%), rgba(24,24,42,0.80);
+    border-left: 4px solid var(--neon2);
+    box-shadow: 0 0 32px 8px var(--neon1), -2px 0 24px var(--neon2);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    padding: 80px 24px 24px 24px;
+    transition: right 0.4s var(--transition);
+    z-index: 200;
+    display: none;
     }
+    nav.open {
+    right: 0;
+    display: flex;
+    background: linear-gradient(120deg, rgba(0,255,247,0.22) 0%, rgba(255,0,234,0.18) 100%), rgba(24,24,42,0.75);
+    box-shadow: 0 0 64px 16px var(--neon1), -2px 0 48px var(--neon2);
+    }
+    nav:not(.open) {
+    display: none;
+    }
+    nav a {
+    width: 100%;
+    padding: 18px 0;
+    font-size: 1.2em;
+    border-radius: 0;
+    border-bottom: 1px solid #23234a;
+    margin: 0;
+    text-shadow: 0 0 8px var(--neon2);
+    }
+    .hamburger {
+    display: flex;
+    }
+    .menu-overlay {
+    display: block;
+    }
+    }
+  
+    @media (max-width: 600px) {
+    .logo { font-size: 1.2em; }
+    }
+  
+    
+   
+   
+  
 
+
+    
+  
+  
+    /* ACTIVITIES SECTION */
+   
+  
+  
+    /* CREW RULES */
+   
+  
+  
+   
+ 
+
+    /* Form status messages */
+  
+  
+    /* FOOTER */
+    footer {
+    background: rgba(10,10,26,0.95);
+    border-top: 2px solid var(--neon2);
+    text-align: center;
+    padding: 40px 0 20px 0;
+    margin-top: 60px;
+    color: var(--text2);
+    font-size: 1em;
+    box-shadow: 0 -2px 24px #000a;
+    position: relative;
+    z-index: 1;
+    }
+  
+   
+  
+    footer a {
+    color: var(--neon1);
+    text-decoration: none;
+    font-weight: 700;
+    transition: all 0.3s;
+    padding: 8px 16px;
+    border-radius: 6px;
+    }
+    footer a:hover {
+    color: var(--neon2);
+    background: rgba(255,0,234,0.1);
+    transform: translateY(-2px);
+    }
+      .members-hero h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3em;
+      font-weight: 700;
+      color: var(--neon1);
+      margin-bottom: 12px;
+      letter-spacing: 3px;
+      text-shadow: 0 0 24px var(--neon2), 0 0 48px var(--neon1);
+      animation: neonPulse 2s infinite alternate;
+    }
+    @keyframes neonPulse {
+      from { text-shadow: 0 0 24px var(--neon2), 0 0 48px var(--neon1); }
+      to { text-shadow: 0 0 48px var(--neon1), 0 0 64px var(--neon2); }
+    }
+    .members-hero p {
+      font-size: 1.3em;
+      color: var(--text2);
+      margin-bottom: 0;
+      max-width: 600px;
+      text-shadow: 0 0 8px #000a;
+    }
     .members-hero {
       min-height: 40vh;
       display: flex;
@@ -268,7 +381,7 @@
   height: auto;
   aspect-ratio: 3 / 4; 
     }
-    
+
 
 /* Optional: Slightly tweak on medium-sized screens */
 @media (min-width: 600px) {
@@ -364,62 +477,34 @@
       letter-spacing: 1px;
       filter: brightness(1.2) drop-shadow(0 0 6px var(--neon2));
     }
-  
-
-    footer {
-      background: rgba(10,10,26,0.95);
-      border-top: 2px solid var(--neon2);
-      text-align: center;
-      padding: 40px 0 20px 0;
-      margin-top: 60px;
-      color: var(--text2);
-      font-size: 1em;
-      box-shadow: 0 -2px 24px #000a;
-      position: relative;
-      z-index: 1;
-    }
-    footer a {
-      color: var(--neon1);
-      text-decoration: none;
-      font-weight: 700;
-      transition: all 0.3s;
-      padding: 8px 16px;
-      border-radius: 6px;
-    }
-    footer a:hover {
-      color: var(--neon2);
-      background: rgba(255,0,234,0.1);
-      transform: translateY(-2px);
-    }
   </style>
 </head>
 <body>
+ 
+ 
+  <!-- Floating Particles -->
+  <div class="particles" id="particles"></div>
+
   <header>
     <div class="nav">
-      <div class="logo">Irresponsible Adults</div>
-      <div class="hamburger" onclick="toggleMenu(this)" aria-label="Toggle menu" role="button" tabindex="0">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-      <nav>
-        <a href="index.html">Home</a>
-        <a href="#" style="color:var(--neon1);text-shadow:0 0 8px var(--neon2);">Members</a>
-        <a href="index.html#events">Events</a>
-        <a href="index.html#gallery">Gallery</a>
-        <a href="index.html#join">Join</a>
-      </nav>
+    <div class="logo">Irresponsible Adults</div>
+    <div class="hamburger" id="hamburger" aria-label="Open navigation" tabindex="0">
+    <span></span>
+    <span></span>
+    <span></span>
     </div>
+    <nav id="mainnav">
+    <a href="#home">Home</a>
+    </nav>
+    </div>
+    <div class="menu-overlay" id="menuOverlay"></div>
   </header>
+<div class="menu-overlay" onclick="closeMenu()"></div>
 
-  <!-- Menu overlay -->
-  <div class="menu-overlay" onclick="closeMenu()"></div>
-
-  <section class="members-hero">
+<section class="members-hero">
     <h1>Meet the Crew</h1>
     <p>Every legend needs a crew. Here are the wildest in Los Santos.</p>
   </section>
-
   <div class="members-section">
     <div class="members-list">
       <!-- Your member cards -->
@@ -530,49 +615,119 @@
       </div>
     </div>
   </div>
-
-  <footer>
-    <div class="footer-links"></div>
-    <p>&copy; 2025 Irresponsible Adults Crew | Managed &amp; Developed by tech_demon__ | All rights reserved</p>
-  </footer>
-
   <script>
-    const hamburger = document.querySelector(".hamburger");
-    const nav = document.querySelector("nav");
-    const overlay = document.querySelector(".menu-overlay");
 
-    function toggleMenu(el) {
-      el.classList.toggle("open");
-      nav.classList.toggle("open");
-      overlay.classList.toggle("active");
-      // Lock scroll when menu is open
-      if (nav.classList.contains("open")) {
-        document.body.style.overflow = "hidden";
-      } else {
-        document.body.style.overflow = "";
+    // Create floating particles
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      const particleCount = 15;
+    
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 6 + 's';
+        particle.style.animationDuration = (Math.random() * 3 + 4) + 's';
+      
+        // Random colors
+        const colors = ['#00fff7', '#ff00ea', '#fffb00'];
+        particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+        particle.style.boxShadow = `0 0 10px ${particle.style.background}`;
+      
+        particlesContainer.appendChild(particle);
       }
     }
+  
+    createParticles();
 
+    // Hamburger menu for mobile
+    const hamburger = document.getElementById('hamburger');
+    const nav = document.getElementById('mainnav');
+    const overlay = document.getElementById('menuOverlay');
+  
+    function openMenu() {
+    nav.classList.add('open');
+    overlay.classList.add('active');
+    document.body.classList.add('menu-open');
+    }
     function closeMenu() {
-      hamburger.classList.remove("open");
-      nav.classList.remove("open");
-      overlay.classList.remove("active");
-      document.body.style.overflow = "";
+    nav.classList.remove('open');
+    overlay.classList.remove('active');
+    document.body.classList.remove('menu-open');
     }
-
-    // Optional: close menu on escape key
-    document.addEventListener("keydown", e => {
-      if (e.key === "Escape" && nav.classList.contains("open")) {
-        closeMenu();
-      }
+    hamburger.addEventListener('click', () => {
+    if (nav.classList.contains('open')) {
+    closeMenu();
+    } else {
+    openMenu();
+    }
     });
-    document.querySelectorAll('.member-card').forEach(card => {
-  card.addEventListener('animationend', () => {
-    // Switch to the continuous rapid bounce
-    card.style.animation = 'rapidBounce 3.1s infinite';
-  });
-});
-
+    hamburger.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+    if (nav.classList.contains('open')) {
+    closeMenu();
+    } else {
+    openMenu();
+    }
+    }
+    });
+    overlay.addEventListener('click', closeMenu);
+  
+    // Close nav on link click (mobile)
+    document.querySelectorAll('nav a').forEach(link => {
+    link.addEventListener('click', function(e) {
+    const href = this.getAttribute('href');
+    if (window.innerWidth <= 900) closeMenu();
+    if (href.startsWith('#')) {
+    e.preventDefault();
+    document.querySelector(href).scrollIntoView({ behavior: 'smooth' });
+    }
+    });
+    });
+  
+    // Section reveal on scroll
+    function revealSections() {
+    document.querySelectorAll('.section').forEach(section => {
+    const rect = section.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 80) {
+    section.classList.add('visible');
+    }
+    });
+    }
+    window.addEventListener('scroll', revealSections);
+    window.addEventListener('load', revealSections);
+  
+    // Animate stats on scroll
+    function animateStats() {
+      const statsSection = document.getElementById('stats');
+      if (!statsSection || !statsSection.classList.contains('visible')) return;
+      
+      document.querySelectorAll('.stat-number').forEach(el => {
+        if (!el.dataset.animated) {
+          const targetText = el.textContent;
+          const targetNumber = parseInt(targetText.replace(/\D/g, ''));
+          
+          if (targetNumber && targetNumber > 0) {
+            let count = 0;
+            const step = Math.ceil(targetNumber / 40);
+            const interval = setInterval(() => {
+              count += step;
+              if (count >= targetNumber) {
+                el.textContent = targetText;
+                clearInterval(interval);
+                el.dataset.animated = true;
+              } else {
+                el.textContent = count + (targetText.includes('+') ? '+' : '');
+              }
+            }, 50);
+          }
+        }
+      });
+    }
+    window.addEventListener('scroll', animateStats);
+  
+    // FORM SUBMISSION WITH EMAILJS
+  
   </script>
 </body>
 </html>
