@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Meet the Crew | Irresponsible Adults</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Inter:wght@400;700&display=swap" rel="stylesheet" />
   <style>
     :root {
       --bg: #0a0a1a;
@@ -33,6 +33,8 @@
       backdrop-filter: blur(8px);
       border-bottom: 2px solid var(--neon2);
       padding: 0;
+      position: relative;
+      z-index: 300; /* above overlay */
     }
     .nav {
       max-width: 1200px;
@@ -41,6 +43,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 18px 32px;
+      position: relative;
     }
     .logo {
       font-family: 'Orbitron', sans-serif;
@@ -62,6 +65,37 @@
       box-shadow: 0 0 16px var(--neon2);
       margin-right: 8px;
     }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 38px;
+      height: 38px;
+      cursor: pointer;
+      z-index: 301; /* above header */
+      transition: transform 0.3s ease;
+    }
+    .hamburger span {
+      display: block;
+      width: 28px;
+      height: 3px;
+      margin: 4px 0;
+      background: var(--neon2);
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+    .hamburger.open span:nth-child(1) {
+      transform: rotate(45deg) translate(7px, 7px);
+    }
+    .hamburger.open span:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger.open span:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -9px);
+    }
+
     nav {
       display: flex;
       gap: 28px;
@@ -83,6 +117,68 @@
       background: #23234a44;
       box-shadow: 0 0 12px var(--neon2);
     }
+
+    /* Overlay for menu on mobile */
+    .menu-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0, 255, 247, 0.03);
+      backdrop-filter: blur(1px);
+      z-index: 150;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+    }
+    .menu-overlay.active {
+      display: block;
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    @media (max-width: 900px) {
+      .hamburger {
+        display: flex;
+      }
+      
+      nav {
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        right: -100vw;
+        width: 70vw;
+        height: 100vh;
+        background: linear-gradient(120deg, rgba(0,255,247,0.18) 0%, rgba(255,0,234,0.12) 100%), rgba(24,24,42,0.80);
+        border-left: 4px solid var(--neon2);
+        box-shadow: 0 0 32px 8px var(--neon1), -2px 0 24px var(--neon2);
+        align-items: flex-start;
+        gap: 0;
+        padding: 80px 24px 24px 24px;
+        transition: right 0.4s var(--transition);
+        z-index: 200;
+        display: none;
+      }
+      nav.open {
+        right: 0;
+        display: flex;
+        background: linear-gradient(120deg, rgba(0,255,247,0.22) 0%, rgba(255,0,234,0.18) 100%), rgba(24,24,42,0.75);
+        box-shadow: 0 0 64px 16px var(--neon1), -2px 0 48px var(--neon2);
+      }
+      nav:not(.open) {
+        display: none;
+      }
+      nav a {
+        width: 100%;
+        padding: 18px 0;
+        font-size: 1.2em;
+        border-radius: 0;
+        border-bottom: 1px solid #23234a;
+        margin: 0;
+        text-shadow: 0 0 8px var(--neon2);
+      }
+    }
+
     .members-hero {
       min-height: 40vh;
       display: flex;
@@ -115,6 +211,7 @@
       max-width: 600px;
       text-shadow: 0 0 8px #000a;
     }
+
     .members-section {
       max-width: 1100px;
       margin: 40px auto 60px auto;
@@ -136,57 +233,124 @@
       background: var(--card);
       border-radius: 16px;
       box-shadow: 0 0 16px var(--neon2);
-      padding: 24px 18px;
+      padding: 0;
       width: 240px;
+      height: 320px;
       text-align: center;
       transition: transform 0.2s, box-shadow 0.2s;
       position: relative;
       overflow: hidden;
       border: 2px solid var(--neon1);
-      animation: fadeInUp 1s;
+  animation: slideUpThenBounceOnce 1.2s forwards;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
     }
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(40px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+@keyframes slideUpThenBounceOnce {
+  0% {
+    opacity: 0;
+    transform: translateY(60px);
+    animation-timing-function: ease-in;
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-15px);
+    animation-timing-function: ease-out;
+  }
+  75% {
+    transform: translateY(5px);
+    animation-timing-function: ease-in;
+  }
+  90% {
+    transform: translateY(-4px);
+    animation-timing-function: ease-out;
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes rapidBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+
+
     .member-card:hover {
       transform: translateY(-8px) scale(1.04);
       box-shadow: 0 0 32px var(--neon1), 0 0 24px var(--neon2);
       border-color: var(--neon2);
     }
-    .member-avatar {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      border: 3px solid var(--neon2);
-      margin-bottom: 14px;
+    .member-image-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
-      box-shadow: 0 0 16px var(--neon1);
-      background: #222;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
+      z-index: 1;
     }
-    .member-name {
-      font-family: 'Orbitron', sans-serif;
+    .member-info-overlay {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      background: linear-gradient(0deg, rgba(10,10,26,0.92) 80%, rgba(10,10,26,0.2) 100%);
+      padding: 32px 12px 18px 12px;
+      z-index: 2;
+    }
+    .member-info-overlay .member-name {
       color: var(--neon1);
-      font-size: 1.3rem;
-      margin-bottom: 6px;
-      letter-spacing: 1px;
+      font-size: 1.2rem;
+      margin-bottom: 2px;
+      font-family: 'Orbitron', sans-serif;
+      letter-spacing: 2px;
+      text-shadow: 0 0 12px var(--neon2), 0 0 24px var(--neon1);
     }
-    .member-role {
-      color: var(--neon2);
+    .member-info-overlay .member-bio {
       font-size: 1.05rem;
-      margin-bottom: 8px;
-    }
-    .member-bio {
-      font-size: 1.01rem;
-      color: var(--text2);
+      font-weight: 700;
+      background: linear-gradient(90deg, var(--neon1), var(--neon2), var(--neon3));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+      letter-spacing: 1px;
+      filter: brightness(1.2) drop-shadow(0 0 6px var(--neon2));
     }
     @media (max-width: 900px) {
-      .nav { flex-direction: column; gap: 18px; padding: 16px; }
       .members-section { padding: 22px 10px; }
       .members-list { flex-direction: column; gap: 18px; }
+      .member-card { width: 98vw; max-width: 340px; height: 340px; }
+    }
+
+    footer {
+      background: rgba(10,10,26,0.95);
+      border-top: 2px solid var(--neon2);
+      text-align: center;
+      padding: 40px 0 20px 0;
+      margin-top: 60px;
+      color: var(--text2);
+      font-size: 1em;
+      box-shadow: 0 -2px 24px #000a;
+      position: relative;
+      z-index: 1;
+    }
+    footer a {
+      color: var(--neon1);
+      text-decoration: none;
+      font-weight: 700;
+      transition: all 0.3s;
+      padding: 8px 16px;
+      border-radius: 6px;
+    }
+    footer a:hover {
+      color: var(--neon2);
+      background: rgba(255,0,234,0.1);
+      transform: translateY(-2px);
     }
   </style>
 </head>
@@ -194,6 +358,11 @@
   <header>
     <div class="nav">
       <div class="logo">Irresponsible Adults</div>
+      <div class="hamburger" onclick="toggleMenu(this)" aria-label="Toggle menu" role="button" tabindex="0">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
       <nav>
         <a href="index.html">Home</a>
         <a href="#" style="color:var(--neon1);text-shadow:0 0 8px var(--neon2);">Members</a>
@@ -203,37 +372,168 @@
       </nav>
     </div>
   </header>
+
+  <!-- Menu overlay -->
+  <div class="menu-overlay" onclick="closeMenu()"></div>
+
   <section class="members-hero">
     <h1>Meet the Crew</h1>
     <p>Every legend needs a crew. Here are the wildest in Los Santos.</p>
   </section>
+
   <div class="members-section">
     <div class="members-list">
-      <div class="member-card">
-        <img class="member-avatar" src="https://placehold.co/100x100/00fff7/fff?text=NR" alt="NightRunner">
-        <div class="member-name">NightRunner</div>
-        <div class="member-role">Leader</div>
-        <div class="member-bio">Plans the chaos. Always first in, last out.</div>
+      <!-- Your member cards -->
+      <div class="member-card" style="animation-delay: 0.9s;">
+        <img class="member-image-overlay" src="https://cdn.abacus.ai/images/c20e0e44-783f-4377-b7bd-eca73e316f85.png" alt="Crew Member 1" />
+        <div class="member-info-overlay">
+          <div class="member-name">Crew Member 1</div>
+          <div class="member-bio">Bio for Crew Member 1.</div>
+        </div>
+      </div>
+      <div class="member-card" style="animation-delay: 0.8s;">
+        <img class="member-image-overlay" src="https://cdn.abacus.ai/images/12866be8-4334-47cc-b48a-34fc7d51caa5.png" alt="Crew Member 2" />
+        <div class="member-info-overlay">
+          <div class="member-name">Crew Member 2</div>
+          <div class="member-bio">Bio for Crew Member 2.</div>
+        </div>
+      </div>
+      <div class="member-card" style="animation-delay: 0.12s;">
+        <img class="member-image-overlay" src="https://cdn.abacus.ai/images/b460019d-e8a4-4903-8ad1-19fc1e4dd57f.png" alt="Crew Member 3" />
+        <div class="member-info-overlay">
+          <div class="member-name">Crew Member 3</div>
+          <div class="member-bio">Bio for Crew Member 3.</div>
+        </div>
+      </div>
+      <div class="member-card" style="animation-delay: 0.16s;">
+        <img class="member-image-overlay" src="https://cdn.abacus.ai/images/adb0ea00-e28b-428d-a080-625827817bab.png" alt="Crew Member 4" />
+        <div class="member-info-overlay">
+          <div class="member-name">Crew Member 4</div>
+          <div class="member-bio">Bio for Crew Member 4.</div>
+        </div>
       </div>
       <div class="member-card">
-        <img class="member-avatar" src="https://placehold.co/100x100/ff00ea/fff?text=TV" alt="TurboVixen">
-        <div class="member-name">TurboVixen</div>
-        <div class="member-role">Driver</div>
-        <div class="member-bio">Queen of the getaway. Drifts like a legend.</div>
+        <img class="member-image-overlay" src="https://cdn.abacus.ai/images/1c65269d-a1a5-4f9a-8273-fdf6bcab3889.png" alt="Crew Member 5" />
+        <div class="member-info-overlay">
+          <div class="member-name">Crew Member 5</div>
+          <div class="member-bio">Bio for Crew Member 5.</div>
+        </div>
       </div>
       <div class="member-card">
-        <img class="member-avatar" src="https://placehold.co/100x100/fffb00/222?text=BL" alt="Blitz">
-        <div class="member-name">Blitz</div>
-        <div class="member-role">Enforcer</div>
-        <div class="member-bio">Brings the firepower. Never backs down.</div>
+        <img class="member-image-overlay" src="https://cdn.abacus.ai/images/554702a8-2e76-48cc-a459-faf6c8eab8ca.png" alt="Crew Member 6" />
+        <div class="member-info-overlay">
+          <div class="member-name">Crew Member 6</div>
+          <div class="member-bio">Bio for Crew Member 6.</div>
+        </div>
       </div>
       <div class="member-card">
-        <img class="member-avatar" src="https://placehold.co/100x100/1a1a2e/fff?text=HK" alt="Glitch">
-        <div class="member-name">Glitch</div>
-        <div class="member-role">Hacker</div>
-        <div class="member-bio">Digital ghost. Makes the impossible possible.</div>
+        <img class="member-image-overlay" src="https://cdn.abacus.ai/images/f0d8d582-bd32-4e95-abef-74bb861795c7.png" alt="Crew Member 7" />
+        <div class="member-info-overlay">
+          <div class="member-name">Crew Member 7</div>
+          <div class="member-bio">Bio for Crew Member 7.</div>
+        </div>
+      </div>
+      <div class="member-card">
+        <img class="member-image-overlay" src="https://cdn.abacus.ai/images/0ab52831-ee86-477a-9682-b417c7fd98d7.png" alt="Crew Member 8" />
+        <div class="member-info-overlay">
+          <div class="member-name">Crew Member 8</div>
+          <div class="member-bio">Bio for Crew Member 8.</div>
+        </div>
+      </div>
+      <div class="member-card">
+        <img class="member-image-overlay" src="https://cdn.abacus.ai/images/881a5f72-7c29-4dd0-ac38-0d906b0a3e5a.png" alt="Crew Member 9" />
+        <div class="member-info-overlay">
+          <div class="member-name">Crew Member 9</div>
+          <div class="member-bio">Bio for Crew Member 9.</div>
+        </div>
+      </div>
+      <div class="member-card">
+        <img class="member-image-overlay" src="https://cdn.abacus.ai/images/05d4920a-daba-4810-a83d-75deb5fe9f23.png" alt="Crew Member 10" />
+        <div class="member-info-overlay">
+          <div class="member-name">Crew Member 10</div>
+          <div class="member-bio">Bio for Crew Member 10.</div>
+        </div>
+      </div>
+      <div class="member-card">
+        <img class="member-image-overlay" src="https://cdn.abacus.ai/images/77cb4576-a605-4958-b2db-0329793c5101.png" alt="Crew Member 11" />
+        <div class="member-info-overlay">
+          <div class="member-name">Crew Member 11</div>
+          <div class="member-bio">Bio for Crew Member 11.</div>
+        </div>
+      </div>
+      <div class="member-card">
+        <img class="member-image-overlay" src="https://cdn.abacus.ai/images/ddb1ab57-0c21-451d-a892-c0d640401337.png" alt="Crew Member 12" />
+        <div class="member-info-overlay">
+          <div class="member-name">Crew Member 12</div>
+          <div class="member-bio">Bio for Crew Member 12.</div>
+        </div>
+      </div>
+      <div class="member-card">
+        <img class="member-image-overlay" src="https://cdn.abacus.ai/images/31d966df-f1f2-46ef-be61-0c1bfc51e01e.png" alt="Crew Member 13" />
+        <div class="member-info-overlay">
+          <div class="member-name">Crew Member 13</div>
+          <div class="member-bio">Bio for Crew Member 13.</div>
+        </div>
+      </div>
+      <div class="member-card">
+        <img class="member-image-overlay" src="https://cdn.abacus.ai/images/3a63df97-f036-4ca0-8e5d-a5537f0aff4d.png" alt="Crew Member 14" />
+        <div class="member-info-overlay">
+          <div class="member-name">Crew Member 14</div>
+          <div class="member-bio">Bio for Crew Member 14.</div>
+        </div>
+      </div>
+      <div class="member-card">
+        <img class="member-image-overlay" src="https://cdn.abacus.ai/images/34a088f3-c68b-43fe-b515-90530a0aba89.png" alt="Crew Member 15" />
+        <div class="member-info-overlay">
+          <div class="member-name">Crew Member 15</div>
+          <div class="member-bio">Bio for Crew Member 15.</div>
+        </div>
       </div>
     </div>
   </div>
+
+  <footer>
+    <div class="footer-links"></div>
+    <p>&copy; 2025 Irresponsible Adults Crew | Managed &amp; Developed by tech_demon__ | All rights reserved</p>
+  </footer>
+
+  <script>
+    const hamburger = document.querySelector(".hamburger");
+    const nav = document.querySelector("nav");
+    const overlay = document.querySelector(".menu-overlay");
+
+    function toggleMenu(el) {
+      el.classList.toggle("open");
+      nav.classList.toggle("open");
+      overlay.classList.toggle("active");
+      // Lock scroll when menu is open
+      if (nav.classList.contains("open")) {
+        document.body.style.overflow = "hidden";
+      } else {
+        document.body.style.overflow = "";
+      }
+    }
+
+    function closeMenu() {
+      hamburger.classList.remove("open");
+      nav.classList.remove("open");
+      overlay.classList.remove("active");
+      document.body.style.overflow = "";
+    }
+
+    // Optional: close menu on escape key
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape" && nav.classList.contains("open")) {
+        closeMenu();
+      }
+    });
+    document.querySelectorAll('.member-card').forEach(card => {
+  card.addEventListener('animationend', () => {
+    // Switch to the continuous rapid bounce
+    card.style.animation = 'rapidBounce 3.1s infinite';
+  });
+});
+
+  </script>
 </body>
 </html>
