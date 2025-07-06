@@ -259,21 +259,19 @@
     <span></span>
     </div>
     <nav id="mainnav">
-    <a href="index.html">Home</a>
-      <a href="members.html">Crew Members</a>
+    <a href="#home">Home</a>
     </nav>
     </div>
     <div class="menu-overlay" id="menuOverlay"></div>
     
   </header>
-
 <!-- Hacker Terminal Boot -->
 <pre id="terminalBoot" style="
   font-family: 'Share Tech Mono', monospace;
   font-size: 1rem;
   color: #00fff7;
   white-space: pre-wrap;
-  text-shadow: 0 0 6px #00fff7, 0 0 18px #ff00ea;
+  text-shadow: 0 0 10px #00fff7, 0 0 25px #ff00ea;
   padding: 2rem 1rem;
   max-width: 960px;
   margin: 3rem auto;
@@ -283,6 +281,8 @@
   overflow: hidden;
   position: relative;
   z-index: 10;
+  border: none;
+  animation: flickerIn 1.2s ease-in-out forwards;
 "></pre>
 
 <!-- CRT Scanline Overlay -->
@@ -292,8 +292,8 @@
   inset: 0;
   background: repeating-linear-gradient(
     0deg,
-    rgba(0,255,255,0.02) 0px,
-    rgba(0,255,255,0.05) 2px,
+    rgba(0,255,255,0.03) 0px,
+    rgba(0,255,255,0.07) 2px,
     transparent 3px,
     transparent 4px
   );
@@ -302,208 +302,297 @@
   animation: crtScanlinePulse 3s infinite;
 "></div>
 
-<!-- Gallery -->
-<div id="glitchGallery" style="display:none; max-width:960px; margin:2rem auto; position:relative; user-select:none;">
-  <div style="position:relative; overflow:hidden; border-radius:12px;">
-    <img id="galleryImg" src="crew/mama.jpg" alt="Mama" style="
-      width:100%;
-      object-fit:cover;
-      filter: brightness(1.2) contrast(1.4);
-      transition: transform 0.7s ease, opacity 0.7s ease;
-      box-shadow: 0 0 30px #00fff7, 0 0 60px #ff00ea;
+<!-- Horizontal Slider Gallery -->
+<div id="horizontalGallery" style="
+  display:none;
+  max-width: 960px;
+  margin: 2rem auto;
+  user-select:none;
+  font-family: 'Share Tech Mono', monospace;
+  color: #00fff7;
+">
+
+  <div style="
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow:
+      0 0 50px #00fff7,
+      0 0 90px #ff00ea,
+      inset 0 0 80px #00fff7;
+    border: 2px solid transparent;
+    background: linear-gradient(90deg, #000011 0%, #100022 100%);
+  ">
+    <img id="mainImage" src="crew/mama.jpg" alt="Gallery Image" style="
+      width: 100%;
+      height: 480px;
+      object-fit: cover;
+      filter: brightness(1.15) contrast(1.4);
+      border-radius: 20px;
+      transition: transform 0.6s ease, opacity 0.6s ease, box-shadow 1s ease;
+      box-shadow: 0 0 40px #00fff7, 0 0 80px #ff00ea;
+      user-select:none;
+      cursor: default;
       position: relative;
       z-index: 1;
+      animation: glitchBorder 3s infinite alternate ease-in-out;
+      border: 3px solid #00fff7;
     ">
-    <canvas id="glitchCanvas" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; mix-blend-mode: screen; border-radius:12px; z-index: 2;"></canvas>
+    <button id="prevBtn" aria-label="Previous" style="
+      position: absolute;
+      top: 50%;
+      left: 16px;
+      transform: translateY(-50%);
+      background: linear-gradient(135deg, #00fff7, #ff00ea);
+      border: none;
+      color: black;
+      font-size: 3rem;
+      cursor: pointer;
+      user-select: none;
+      text-shadow: none;
+      border-radius: 12px;
+      width: 54px;
+      height: 54px;
+      box-shadow: 0 0 25px #00fff7, 0 0 50px #ff00ea;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+      z-index: 5;
+    ">‹</button>
+    <button id="nextBtn" aria-label="Next" style="
+      position: absolute;
+      top: 50%;
+      right: 16px;
+      transform: translateY(-50%);
+      background: linear-gradient(135deg, #00fff7, #ff00ea);
+      border: none;
+      color: black;
+      font-size: 3rem;
+      cursor: pointer;
+      user-select: none;
+      text-shadow: none;
+      border-radius: 12px;
+      width: 54px;
+      height: 54px;
+      box-shadow: 0 0 25px #00fff7, 0 0 50px #ff00ea;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+      z-index: 5;
+    ">›</button>
   </div>
+
   <div id="caption" style="
-    text-align:center;
-    font-family:'Share Tech Mono', monospace;
-    font-size:1.8rem;
-    margin-top:1rem;
-    color:#00fff7;
-    text-shadow:0 0 8px #00fff7, 0 0 16px #ff00ea;
+    margin: 1rem 0 0;
+    text-align: center;
+    font-size: 1.7rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-shadow:
+      0 0 15px #00fff7,
+      0 0 30px #ff00ea,
+      0 0 45px #ff00ea;
     user-select:none;
+    animation: flickerText 4s infinite alternate;
   ">Mama</div>
-  <div style="margin-top:1rem; display:flex; justify-content:space-between;">
-    <button class="navBtn" onclick="slide(-1)">‹ PREV</button>
-    <button class="navBtn" onclick="slide(1)">NEXT ›</button>
+
+  <div id="thumbs" style="
+    display: flex;
+    justify-content: flex-start;
+    gap: 16px;
+    margin-top: 1.2rem;
+    overflow-x: auto;
+    padding: 0 1rem;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  ">
+    <!-- Thumbnails added by JS -->
   </div>
+
 </div>
 
-<!-- Styles -->
 <style>
-  .navBtn {
-    background: transparent;
-    color: #00fff7;
-    border: 2px solid #00fff7;
-    padding: 10px 24px;
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 1rem;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: 0.3s ease;
-    text-shadow: 0 0 6px #00fff7;
-    animation: neonPulse 2.5s infinite alternate;
+  @keyframes flickerIn {
+    0% { opacity: 0; }
+    30% { opacity: 0.2; }
+    60% { opacity: 0.6; }
+    100% { opacity: 1; }
   }
-  .navBtn:hover {
-    background: #ff00ea;
-    color: black;
-    box-shadow: 0 0 20px #ff00ea;
-    animation-play-state: paused;
-  }
-
-  @keyframes neonPulse {
-    from {
-      text-shadow: 0 0 6px #00fff7;
-      box-shadow: 0 0 12px #00fff7;
-    }
-    to {
-      text-shadow: 0 0 14px #ff00ea;
-      box-shadow: 0 0 36px #ff00ea;
-    }
-  }
-
   @keyframes crtScanlinePulse {
-    0%, 100% { opacity: 0.08; }
+    0%, 100% { opacity: 0.07; }
     50% { opacity: 0.14; }
   }
-
-  @keyframes flickerGlitch {
-    0%, 100% { opacity: 1; transform: translate(0,0); }
-    20% { opacity: 0.7; transform: translate(-1px, 1px); }
-    40% { opacity: 1; transform: translate(1px, -1px); }
-    60% { opacity: 0.6; transform: translate(-1px, -1px); }
-    80% { opacity: 1; transform: translate(1px, 1px); }
+  @keyframes flickerText {
+    0%, 100% {
+      text-shadow:
+        0 0 15px #00fff7,
+        0 0 30px #ff00ea,
+        0 0 45px #ff00ea;
+      opacity: 1;
+    }
+    50% {
+      text-shadow:
+        0 0 10px #00fff7,
+        0 0 20px #ff00ea;
+      opacity: 0.85;
+    }
+  }
+  @keyframes glitchBorder {
+    0% {
+      box-shadow:
+        0 0 40px #00fff7,
+        0 0 80px #ff00ea;
+    }
+    50% {
+      box-shadow:
+        0 0 60px #00fff7,
+        0 0 120px #ff00ea;
+    }
+    100% {
+      box-shadow:
+        0 0 40px #00fff7,
+        0 0 80px #ff00ea;
+    }
+  }
+  .thumbnail {
+    width: 96px;
+    height: 72px;
+    border-radius: 14px;
+    object-fit: cover;
+    cursor: pointer;
+    border: 2px solid transparent;
+    box-shadow:
+      0 0 15px #00fff7;
+    transition: border-color 0.35s ease, transform 0.35s ease, box-shadow 0.35s ease;
+    filter: brightness(1.15) contrast(1.5);
+    flex-shrink: 0;
+  }
+  .thumbnail:hover {
+    transform: scale(1.2) rotate(-2deg);
+    border-color: #ff00ea;
+    box-shadow:
+      0 0 35px #ff00ea;
+    filter: brightness(1.3) contrast(1.7);
+  }
+  .thumbnail.active {
+    border-color: #ff00ea;
+    box-shadow:
+      0 0 50px #ff00ea;
+    filter: brightness(1.5) contrast(1.8);
+    transform: scale(1.25) rotate(-2deg);
+  }
+  button:hover {
+    background: linear-gradient(135deg, #ff00ea, #00fff7);
+    box-shadow: 0 0 40px #ff00ea, 0 0 70px #00fff7;
+    color: #000;
+  }
+  #thumbs::-webkit-scrollbar {
+    display: none;
   }
 </style>
 
-<!-- Script -->
 <script>
-  const bootLines = [
-    "[SYSTEM] Boot sequence initiated...",
-    "[ACCESS] Authenticating root@irresponsible...",
-    "[OK] Connection handshake complete.",
-    "[LOADING] Crew Gallery...",
-    "[DECRYPT] Surveillance visuals unlocked.",
-    "███████████████████████████████████ 100%",
-    "[SYSTEM ONLINE] Press → to begin"
-  ];
-  const boot = document.getElementById("terminalBoot");
-  const gallery = document.getElementById("glitchGallery");
+const bootLines = [
+  "[SYSTEM] Boot sequence initiated...",
+  "[ACCESS] Authenticating root@irresponsible...",
+  "[OK] Connection handshake complete.",
+  "[LOADING] Crew profiles...",
+  "[DECRYPT] Surveillance visuals unlocked.",
+  "███████████████████████████████████ 100%",
+  "[SYSTEM ONLINE] Press → to begin"
+];
+const boot = document.getElementById("terminalBoot");
+const gallery = document.getElementById("horizontalGallery");
+const mainImage = document.getElementById("mainImage");
+const caption = document.getElementById("caption");
+const thumbs = document.getElementById("thumbs");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
 
-  // Helper: Random glitch flicker characters
-  const glitchChars = ['#', '%', '@', '*', '!', '&', '?', '$', '§', '°', '~'];
+const glitchChars = ['#', '%', '@', '*', '!', '&', '?', '$', '§', '°', '~'];
 
-  function glitchText(text) {
-    return text.split('').map(ch => {
-      if (Math.random() < 0.05) return glitchChars[Math.floor(Math.random() * glitchChars.length)];
-      return ch;
-    }).join('');
-  }
+const images = [
+  { src: "crew/mama.jpg", name: "" },
+  { src: "crew/mark.jpg", name: "" },
+  { src: "crew/pickle.jpg", name: "" },
+   { src: "crew/pickle.jpg", name: "" }
+];
 
-  async function typeBoot(lines) {
-    for (const line of lines) {
-      for (let i = 0; i < line.length; i++) {
-        // Display real char or random glitch char 5% chance
-        boot.textContent += (Math.random() < 0.05) ? glitchChars[Math.floor(Math.random() * glitchChars.length)] : line[i];
-        await new Promise(res => setTimeout(res, 30));
-      }
-      boot.textContent += '\n';
-      await new Promise(res => setTimeout(res, 250));
+let index = 0;
+
+async function typeBoot(lines) {
+  for (const line of lines) {
+    for (let i = 0; i < line.length; i++) {
+      boot.textContent += (Math.random() < 0.05) ? glitchChars[Math.floor(Math.random() * glitchChars.length)] : line[i];
+      await new Promise(r => setTimeout(r, 30));
     }
+    boot.textContent += '\n';
+    await new Promise(r => setTimeout(r, 250));
+  }
+  setTimeout(() => {
+    boot.style.transition = 'opacity 1s';
+    boot.style.opacity = 0;
     setTimeout(() => {
-      boot.style.transition = 'opacity 1s';
-      boot.style.opacity = 0;
-      setTimeout(() => {
-        boot.remove();
-        gallery.style.display = "block";
-        slide(0);
-      }, 1000);
+      boot.remove();
+      gallery.style.display = "block";
+      setupThumbnails();
+      updateGallery();
     }, 1000);
-  }
+  }, 1000);
+}
 
-  typeBoot(bootLines);
-
-  // Gallery with glitch RGB split effect on slide
-  const images = [
-    { src: "crew/mama.jpg", name: "" },
-    { src: "crew/mark.jpg", name: "" },
-    { src: "crew/pickle.jpg", name: "" }
-  ];
-  let index = 0;
-
-  const galleryImg = document.getElementById("galleryImg");
-  const caption = document.getElementById("caption");
-  const glitchCanvas = document.getElementById("glitchCanvas");
-  const ctx = glitchCanvas.getContext('2d');
-
-  // Resize canvas to img size
-  function resizeCanvas() {
-    glitchCanvas.width = galleryImg.clientWidth;
-    glitchCanvas.height = galleryImg.clientHeight;
-  }
-  window.addEventListener('resize', resizeCanvas);
-  galleryImg.onload = resizeCanvas;
-
-  // Draw glitch RGB channels for effect
-  function drawGlitch() {
-    if (!galleryImg.complete) return;
-    ctx.clearRect(0, 0, glitchCanvas.width, glitchCanvas.height);
-    const xShift = (Math.random() - 0.5) * 10;
-    const yShift = (Math.random() - 0.5) * 5;
-    ctx.globalAlpha = 0.6;
-
-    // Red channel
-    ctx.filter = 'brightness(1.3) contrast(1.5)';
-    ctx.globalCompositeOperation = 'lighter';
-    ctx.drawImage(galleryImg, xShift, yShift, glitchCanvas.width, glitchCanvas.height);
-
-    // Green channel shifted left
-    ctx.filter = 'brightness(0.7) contrast(1.5) drop-shadow(0 0 5px #0ff)';
-    ctx.globalCompositeOperation = 'lighter';
-    ctx.drawImage(galleryImg, xShift - 5, yShift, glitchCanvas.width, glitchCanvas.height);
-
-    // Blue channel shifted right
-    ctx.filter = 'brightness(0.7) contrast(1.5) drop-shadow(0 0 5px #f0f)';
-    ctx.globalCompositeOperation = 'lighter';
-    ctx.drawImage(galleryImg, xShift + 5, yShift, glitchCanvas.width, glitchCanvas.height);
-
-    ctx.globalAlpha = 1;
-    ctx.globalCompositeOperation = 'source-over';
-  }
-
-  let glitchInterval;
-
-  function startGlitch() {
-    glitchInterval = setInterval(drawGlitch, 80);
-    setTimeout(stopGlitch, 600);
-  }
-  function stopGlitch() {
-    clearInterval(glitchInterval);
-    ctx.clearRect(0, 0, glitchCanvas.width, glitchCanvas.height);
-  }
-
-  function slide(dir) {
-    index = (index + dir + images.length) % images.length;
-    galleryImg.style.opacity = 0.3;
-    galleryImg.style.transform = `translateX(${dir > 0 ? '30px' : '-30px'})`;
-    startGlitch();
-    setTimeout(() => {
-      galleryImg.src = images[index].src;
-      caption.textContent = images[index].name;
-      galleryImg.style.opacity = 1;
-      galleryImg.style.transform = 'translateX(0)';
-    }, 300);
-  }
-
-  document.addEventListener("keydown", e => {
-    if (e.key === "ArrowLeft") slide(-1);
-    if (e.key === "ArrowRight") slide(1);
+function setupThumbnails() {
+  images.forEach((img, i) => {
+    const thumb = document.createElement("img");
+    thumb.src = img.src;
+    thumb.alt = img.name;
+    thumb.className = "thumbnail";
+    thumb.onclick = () => {
+      index = i;
+      updateGallery();
+    };
+    thumbs.appendChild(thumb);
   });
+}
 
-  // Removed the terminate session button event listener
+function updateGallery() {
+  mainImage.style.opacity = 0;
+  mainImage.style.transform = 'translateX(20px) scale(0.95)';
+  setTimeout(() => {
+    mainImage.src = images[index].src;
+    caption.textContent = images[index].name;
+    mainImage.style.opacity = 1;
+    mainImage.style.transform = 'translateX(0) scale(1)';
+    updateActiveThumbnail();
+  }, 400);
+}
+
+function updateActiveThumbnail() {
+  const allThumbs = thumbs.querySelectorAll("img");
+  allThumbs.forEach((thumb, i) => {
+    thumb.classList.toggle("active", i === index);
+  });
+}
+
+prevBtn.onclick = () => {
+  index = (index - 1 + images.length) % images.length;
+  updateGallery();
+};
+
+nextBtn.onclick = () => {
+  index = (index + 1) % images.length;
+  updateGallery();
+};
+
+document.addEventListener("keydown", e => {
+  if (e.key === "ArrowLeft") {
+    index = (index - 1 + images.length) % images.length;
+    updateGallery();
+  } else if (e.key === "ArrowRight") {
+    index = (index + 1) % images.length;
+    updateGallery();
+  }
+});
+
+typeBoot(bootLines);
 </script>
+
 
 <div class="menu-overlay" onclick="closeMenu()"></div>
 <footer style="
